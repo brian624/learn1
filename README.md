@@ -1,0 +1,1 @@
+first local generated repository to hold code and actions created to follow microsoft learn github guide

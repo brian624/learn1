@@ -31,6 +31,8 @@ impl fmt::Display for Task {
     }
 }
 
+///refactored the list task display part here, so it can be reused
+/// in the add and done tasks
 fn display_task_list(task_list: Vec<Task>) -> Result<()> {
     // Enumerate and display tasks, if any.
     if task_list.is_empty() {
@@ -77,10 +79,10 @@ pub fn complete_task(journal_path: PathBuf, task_position: usize) -> Result<()> 
     file.set_len(0)?;
     serde_json::to_writer(file, &tasks)?;
 
-    // Enumerate and display tasks, if any.
+    // added Enumerate and display tasks, if any.
     display_task_list(tasks)
 
-    //Ok(())
+    //Ok(())  removed in refactoring, result of display_task_list instead
 }
 
 pub fn add_task(journal_path: PathBuf, task: Task) -> Result<()> {
@@ -92,7 +94,7 @@ pub fn add_task(journal_path: PathBuf, task: Task) -> Result<()> {
     let mut tasks = collect_tasks(&file)?;
     tasks.push(task);
     serde_json::to_writer(file, &tasks)?;
-    //Ok(())
+    //Ok(())  -removed to add display of list after add
     display_task_list(tasks)
 }
 
@@ -102,6 +104,7 @@ pub fn list_tasks(journal_path: PathBuf) -> Result<()> {
     // Parse the file and collect the tasks.
     let tasks = collect_tasks(&file)?;
 
+    // refactored into the display_task_list function
     // Enumerate and display tasks, if any.
     //if tasks.is_empty() {
     //    println!("Task list is empty!");
